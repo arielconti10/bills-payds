@@ -5,13 +5,11 @@
             <div class="grey-text">
                 <small>
                     <a href="#/">iFinance</a> >
-                    <span>Suas contas</span>
+          <span>Suas contas</span>
                 </small>
             </div>
         </div>
-
         <div class="card col s12">
-
             <div class="card-content">
                 <table class="highlight">
                     <thead>
@@ -20,10 +18,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr @click="goTo(1)">
+                    <tr v-for="account in accounts.data" @click="goTo(account.id)">
                         <td class="valign-wrapper">
-                            Conte título &nbsp;
-                            <small>agência: 000 / conta: 0000 / código do banco:000</small>
+                            {{ account.title }} &nbsp;
+                            <small>agência: {{ account.agency }} / conta: {{ account.account_number }}  / código do banco:{{ account.bank.code }} </small>
                         </td>
                     </tr>
                     </tbody>
@@ -37,18 +35,26 @@
 </template>
 
 <script>
-    export default {
-      name: 'accounts',
-      methods: {
-        goTo: function (id) {
-          this.$router.push('/contas/' + id)
-        }
+  export default {
+    name: 'accounts',
+    methods: {
+      goTo: function (id) {
+        this.$router.push('/contas/' + id)
       }
+    },
+    computed: {
+      accounts () {
+        return this.$store.state.account.accountList
+      }
+    },
+    created () {
+      this.$store.dispatch('getAccounts')
     }
+  }
 </script>
 
 <style>
-    tbody tr{
+    tbody tr {
         cursor: pointer
     }
 </style>

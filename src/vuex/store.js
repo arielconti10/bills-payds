@@ -1,3 +1,7 @@
+import account from './modules/accounts'
+
 export default {
-  modules: {}
+  modules: {
+    account: account
+  }
 }
